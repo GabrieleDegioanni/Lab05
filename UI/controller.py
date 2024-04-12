@@ -17,3 +17,15 @@ class Controller:
             return
         self._view.txt_result.controls.append(ft.Text(f"Hello, {name}!"))
         self._view.update_page()
+
+    def handleCaricaCorsiDD(self):
+        for corso in self._model.get_corsi().values():
+            self._view.ddCorso.options.append(ft.dropdown.Option(key=corso.codins, text=corso.__str__()))
+
+    def handleCercaIscritti(self, e):
+        selezione = self._view.ddCorso.value
+        result = self._model.cercaIscritti(selezione)
+        self._view.txt_result.controls.append(ft.Text(f"Ci sono {len(result)} iscritti al corso:"))
+        for element in result:
+            self._view.txt_result.controls.append(ft.Text(element))
+        self._view.update_page()
